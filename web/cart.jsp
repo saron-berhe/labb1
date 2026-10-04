@@ -1,5 +1,5 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.HashMap" %>
+<%@ page import="bo.CartHandler" %>
+<%@ page import="ui.CartInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -11,34 +11,48 @@
 <h1>Varukorg</h1>
 
 <%
-    ArrayList<String> cart = (ArrayList<String>) session.getAttribute("cart");
+    if (session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp?msg=needlogin");
+            return;
+    }
 
+    CartHandler cart = (CartHandler) session.getAttribute("cart");
     if (cart == null){
-        cart = new ArrayList<String>();
+        cart = new CartHandler();
         session.setAttribute("cart", cart);
     }
 
-    HashMap<String, Integer> quantities = new HashMap<String, Integer>();
-
-    for (String product : cart){
-        if (quantities.containsKey(product)){
-            quantities.put(product, quantities.get(product) + 1);
-        }else{
-            quantities.put(product, 1);
-        }
+    String remove = request.getParameter("remove");
+    if (remove != null) {
+        cart.removeItem(Integer.parseInt(remove));
+        response.sendRedirect("cart.jsp");
+        return;
     }
 
-    for (String product : quantities.keySet()){
-        int quantity = quantities.get(product);
+    if (cart.isEmpty()){
 %>
+            <p>Kundvagnen är tom.</p>
+<%
+    }
+    else{
+        for (CartInfo ci : cart.getItems()){
+%>
+        <div>
+            <%= ci.getName() %> - <%= String.format("%.2f", ci.getPrice()) %> kr
+            <% if (ci.getQuantity() > 1){ %>
+                x<%= ci.getQuantity() %>
+                (<%= String.format("%.2f", ci.getItemsTotal()) %> kr)
+            <% } %>
 
-<p>
-    <%= product %>
-    <% if (quantity > 1){ %>
-        x<%= quantity %>
-    <% } %>
-</p>
-
+            <form method="post" action="cart.jsp" style="display:inline">
+                    <input type="hidden" name="remove" value="<%= ci.getItemId() %>">
+                    <input type="submit" value="Ta bort">
+            </form>
+        </div>
+    <%
+        }
+    %>
+        <p><b>Totalt: <%= String.format("%.2f", cart.getTotal()) %> kr</b></p>
 <%
     }
 %>
