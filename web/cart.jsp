@@ -31,7 +31,7 @@
 
     if (cart.isEmpty()){
 %>
-            <p>Kundvagnen är tom.</p>
+            <p>Varukorgen är tom.</p>
 <%
     }
     else{

@@ -6,8 +6,6 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%--Startsidan är en öppen sida för alla, men för att lägga varor i korgen måste man logga in--%>
-
 <html>
 <head>
     <title>Produkter</title>
@@ -38,7 +36,7 @@
     }
 %>
 
-<a href="cart.jsp">Visa kundvagn</a> |
+<a href="cart.jsp">Visa varukorg</a> |
 <% if (user == null) { %>
     <a href="login.jsp">Logga in</a>
 <% } else { %>
