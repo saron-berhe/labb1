@@ -40,7 +40,7 @@
     <h1>YSkor Webbshop</h1>
     <nav>
         <ul>
-            <li><a href="cart.jsp">Visa kundvagn</a></li>
+            <li><a href="cart.jsp">Visa varukorg</a></li>
             <% if (user == null) { %>
                 <li><a href="login.jsp">Logga in</a></li>
             <% } else { %>
