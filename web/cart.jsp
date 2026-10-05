@@ -5,9 +5,10 @@
 <html>
 <head>
     <title>Varukorg</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+<div class="container">
 <h1>Varukorg</h1>
 
 <%
@@ -37,14 +38,14 @@
     else{
         for (CartInfo ci : cart.getItems()){
 %>
-        <div>
+        <div class="item">
             <%= ci.getName() %> - <%= String.format("%.2f", ci.getPrice()) %> kr
             <% if (ci.getQuantity() > 1){ %>
                 x<%= ci.getQuantity() %>
                 (<%= String.format("%.2f", ci.getItemsTotal()) %> kr)
             <% } %>
 
-            <form method="post" action="cart.jsp" style="display:inline">
+            <form method="post" action="cart.jsp" class="remove">
                     <input type="hidden" name="remove" value="<%= ci.getItemId() %>">
                     <input type="submit" value="Ta bort">
             </form>
@@ -58,6 +59,6 @@
 %>
 
 <a href="items.jsp">Tillbaka till produkter</a>
-
+</div>
 </body>
 </html>

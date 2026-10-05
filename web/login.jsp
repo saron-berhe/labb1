@@ -26,15 +26,17 @@
 <html>
 <head>
     <title>Logga in</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div class="container">
 <h1>Logga in</h1>
 
 <% if (info != null) { %>
-    <p><%= info %></p>
+    <p class="info"><%= info %></p>
 <% } %>
 <% if (error != null) { %>
-    <p style="color:red"><%= error %></p>
+    <p class="error"><%= error %></p>
 <% } %>
 
 <form method="post" action="login.jsp">
@@ -44,5 +46,6 @@
 </form>
 
 <p><a href="items.jsp">Tillbaka till produkterna</a></p>
+</div>
 </body>
 </html>

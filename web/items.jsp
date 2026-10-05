@@ -6,15 +6,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%--Startsidan är en öppen sida för alla, men för att lägga varor i korgen måste man logga in--%>
-
-<html>
-<head>
-    <title>Produkter</title>
-</head>
-<body>
-
-<h1>Produkter</h1>
+<%--Startsidan är en öppen sida för alla, men för att lägga varor i korgen måste man logga in --%>
 <%
     UserInfo user = (UserInfo) session.getAttribute("user");
     CartHandler cart = (CartHandler) session.getAttribute("cart");
@@ -37,15 +29,28 @@
         return;
     }
 %>
-
-<a href="cart.jsp">Visa kundvagn</a> |
-<% if (user == null) { %>
-    <a href="login.jsp">Logga in</a>
-<% } else { %>
-    Inloggad som <%= user.getUsername() %> |
-    <a href="logout.jsp">Logga ut</a>
-<% } %>
-
+<html>
+<head>
+    <title>Produkter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrapper">
+<header>
+    <h1>YSkor Webbshop</h1>
+    <nav>
+        <ul>
+            <li><a href="cart.jsp">Visa kundvagn</a></li>
+            <% if (user == null) { %>
+                <li><a href="login.jsp">Logga in</a></li>
+            <% } else { %>
+                <li>Inloggad som <%= user.getUsername() %></li>
+                <li><a href="logout.jsp">Logga ut</a></li>
+            <% } %>
+        </ul>
+    </nav>
+</header>
+<main>
 <%
     Collection<ItemInfo> items = ItemHandler.getItemsWithGroup("");
 
@@ -53,18 +58,20 @@
         ItemInfo item = it.next();
 %>
 
-<div>
-    <%= item.getName() %> - <%= String.format("%.2f", item.getPrice()) %> kr
+<section class="card">
+    <img src="images/<%= item.getItemId() %>.jpg" alt="<%= item.getName() %>">
+    <p><%= item.getName() %> - <%= String.format("%.2f", item.getPrice()) %> kr </p>
 
     <form method="post" action="items.jsp">
         <input type="hidden" name="itemId" value="<%= item.getItemId() %>">
         <input type="submit" value="Lägg till i varukorg">
     </form>
-</div>
+</section>
 
 <%
     }
 %>
-
+</main>
+</div>
 </body>
 </html>
