@@ -6,7 +6,7 @@
     String info = null;
 
     if ("needlogin".equals(request.getParameter("msg"))) {
-        info = "Du måste logga in för att lägga varor i kundvagnen.";
+        info = "Du måste logga in för att lägga varor i varukorgen.";
     }
 
     String username = request.getParameter("username");
